@@ -1,0 +1,33 @@
+{% extends "registration/base.html" %}
+{% block title %}Login {% endblock %}
+{% block loginheader %}Login{% endblock %}
+{% block logincontent %}
+<script>
+	$(document).ready(function() {
+		$('div.panel-login').find('input').addClass('form-control');
+		});
+</script>
+{% if not user.is_authenticated %}
+{% if form.errors %}<p class="error">Your username and password didn't match. Please try again.</p>{% endif %}
+<form class="form-horizontal" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+	{% csrf_token %}
+	<div class="container-fluid">
+	<div class="row">{{ form.username.label_tag }}</div>
+	<div class="row">{{ form.username }}</div>
+   	<div class="row">{{ form.password.label_tag }}</div>
+   	<div class="row">{{ form.password }}</div>
+   	<div class="row" style="padding: 10px 0px; text-align: center;">
+   		<input class="btn btn-default" style="width: auto;" type="submit" value="Login" />
+	   	<p><a href="/accounts/register/" style="font-size: 12px;">Don't have a username? Click here to Register</a></p>
+   		<p><a href="/accounts/password/reset/" style="font-size: 12px;">Forgotten your password? Click here to Reset it</a></p>
+   	</div>
+   	<input type="hidden" name="next" value="{{ next }}" />
+	</div>
+</form>
+{% else %}
+<div style="text-align:center">
+<p>Sorry, you are already logged in.</p>
+<p>If you are not {{user.username}}, then <a href="/accounts/logout">click here</a> to logout</p>
+</div>
+{% endif %}
+{% endblock %}

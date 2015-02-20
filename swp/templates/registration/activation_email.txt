@@ -1,0 +1,7 @@
+Hello user,
+You have successfully registered for the UNC CS Student Portal!
+Click this activation link to begin using the site:
+http://localhost:8000/accounts/activate/{{activation_key}}/
+
+You have {{expiration_days}} days before the activation key expires.
+Thanks!

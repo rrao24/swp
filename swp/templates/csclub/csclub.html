@@ -1,0 +1,113 @@
+{% extends "portal/base.html" %}
+{% load extra_templates %}
+{% load humanize %}
+{% block title %} UNC CS Student Portal {% endblock %}
+{% block header %} Computer Science Club at UNC {% endblock %}
+{% block content %}
+<style>
+div.index-row{
+background-color: #f4f4f4;
+}
+div.main-sidebar{
+margin: 10px 0px;
+padding: 10px;
+}
+
+h4.sidebar-header{
+background-color:#56A0D3;
+color: white;
+font-weight: 700;
+display: block;
+margin: 10px 5px;
+padding: 5px;
+text-align:center;
+border-radius: 3px;
+}
+
+ul.useful-links{
+list-style-type: circle;
+color: #848484;
+}
+
+#welcome-msg {
+    font-weight: bold;
+}
+
+</style>
+<div class="row index-row">
+	<div class="col-md-3">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="panel panel-default main-sidebar">
+				<div class="container-fluid">
+				<div class="row"><h4 class="sidebar-header">Upcoming Events</h4></div>
+				<div class="row">
+				
+				<p>Something here</p>	
+				
+				</div>
+				</div>
+				<div class="container-fluid">
+					<div class="row"><h4 class="sidebar-header">Tutoring</h4></div>
+					<div class="row">
+					<p>Thursdays from 5:00 to 7:00 in FB 007. 
+					<ul>
+						<li>If you want to become a tutor, email <a href="mailto:mleming@cs.unc.edu">Matthew Leming</a> or <a href="mailto:rramkuma@live.unc.edu">Rahul Ramkumar</a></li>
+					<ul>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-9">
+	<div class="row text-center">
+    <h4 id="welcome-msg">Computer Science Club Information</h4>
+<p>
+	The UNC Computer Science Club puts together social gatherings, peer education,
+	seminars, and job recruitment events for undergraduates in <a href="http://www.cs.unc.edu/">the Department of
+	Computer Science</a>. If you’d like to contact us for more information, please email us at <a href="mailto:cs-club@cs.unc.edu">cs-club@cs.unc.edu</a>, get on our <a href="https://www.facebook.com/groups/unccsclub/">Facebook group</a>, or see the "People" section to the left
+	page</a> for more contact information.</p>
+  	
+	<h4 id="subscribe-to-the-csc-mailing-list">Subscribe to the CSC mailing list</h1>
+
+  	<form action="http://lists.unc.edu/subscribe/subscribe.tml" method="post">
+	<p>
+	<input type="email" name="email" placeholder="E-mail address" size="48" />
+	<input type="hidden" name="list" value="csclub" />
+	<input type="hidden" name="confirm" value="one" />
+	<input type="hidden" name="showconfirm" value="T" />
+	<input type="hidden" name="url" value="http://csclub.cs.unc.edu/" />
+	<input type="submit" value="Sign up" />
+	</p>
+	</form>
+
+	</div>
+	</div>
+
+	<div class="col-md-9">
+	<div class="row text-center">
+    <h4 id="welcome-msg">People</h4>
+	<p>Will likely be changing...</p>
+	</div>
+	</div>
+
+	<div class="col-md-9">
+	<div class="row text-center">
+    <h4 id="welcome-msg">Hackerspace</h4>
+	<p>
+	The Hackerspace at Chapel Hill, usually referred to as HatCH, meets every
+	Thursday at 7:30 in Sitterson 027. Members of HatCH are inspired to create a
+	friendly and open community of students interested in participating in various
+	DIY projects involving electronics and art. Come to our weekly gatherings to
+	learn about technology, collaborate on technical ventures, work on individual
+	projects, or just relax and enjoy the company of our HatCHlings! 
+	Contact <a href="mailto:rbmyers@live.unc.edu">Roman Myers</a> for further inquiries about how awesome we are. Or, join our <a href="https://www.facebook.com/groups/uncHatCH/?ref=br_tf">Facebook group</a>!</p>
+	</div>
+	</div>
+
+
+
+</div>
+
+{% endblock %}

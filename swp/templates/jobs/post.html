@@ -1,0 +1,139 @@
+{% extends "portal/base.html" %}
+{% load extra_templates %}
+{% load static %}
+{% load humanize %}
+{% block addstyles %}<link rel="stylesheet" href="/static/css/gethired.css">{% endblock%}
+{% block title %} Job Board {% endblock %}
+{% block header %} Job Board {% endblock %}
+{% block content %}
+<div class="filteroptions col-md-3">
+<div class="filterdiv panel panel-default">
+<div class="contain">
+<div class="container-fluid">
+	<div class="row">
+		<h4><span class='labs'>Prepare for an Interview:</span></h4>
+		{% for post in related_posts %}
+			<div class="col-md-12 related-post" data-num="{{forloop.counter}}">
+				<div class="row">
+        			<a class="postLinks" href="{% url 'get_post' post_type=post.post_type.lower post_id=post.pk %}">{{post.company}} - {{post.post_type|title}}</a><br>
+				</div>
+				<div class="row related-post-location">
+					{{post.location}}
+				</div>
+			</div>
+			<div class="hover-test" style="display: none;" data-num="{{forloop.counter}}">
+				<p>Date posted: <span class="data">{{post.date_posted|naturalday|title}}</span></p>
+				<p>Job Title: <span class="data">{{post.get_job_title_display}}</span></p>
+				<p>Job Type: <span class="data">{{post.get_job_type_display}}</span></p>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+		$(document).ready(function(){
+			$(document).scrollTop( $("div.navrow").offset().top );
+			console.log(document.referrer);
+			var refer = new URI(document.referrer);
+			console.log(refer.host());
+			console.log(refer);
+			var edit = refer.path().indexOf("edit");
+			var newind = refer.path().indexOf("new");
+			if(edit > -1){
+				$('.btn-go-back').hide();
+			}
+			if(newind > -1){
+				$('.btn-go-back').hide();
+			}
+			if(refer.host() != "localhost:8000"){
+				$('.btn-go-back').hide();
+			}
+		});
+</script>
+<div class="post_bar col-md-9">
+<div class="postview col-md-12">
+	<div class="container-fluid">
+		<div class="postview-button-row row">
+			<button onclick="window.history.back()" class="btn pull-left btn-info btn-go-back">Go Back</button>
+			{% if user.username == post.author.username %}
+				<form id="delete" method="post" action="{% url 'delete_post' post_type=post.post_type post_id=post.pk %}">
+					 {% csrf_token %}
+				<div class="btn-group pull-right " style="padding-top: 5px;">
+					<button type="button" class="btn btn-info btn-edit  dropdown-toggle" data-toggle="dropdown">Edit/Delete Post<span class="caret"></span></button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="{% url 'edit_post_job' post_id=post.pk %}">Edit Post</a></li>
+					<li class="divider"></li>
+					<li><a href="javascript:void()" id="submit_link">Delete Post</a></li>
+				</ul>
+				</div>
+				</form>
+			{% else %}
+				<div class="btn-group pull-right" style="padding-top: 5px;">
+					<button type="button" class="btn btn-info pull-right dropdown-toggle" data-toggle="dropdown">Edit/Delete Post<span class="caret"></span></button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="{% url 'edit_post_password_job' post_id=post.pk edit_or_delete='edit'%}">Edit Post</a></li>
+					<li class="divider"></li>
+					<li><a href="{% url 'edit_post_password_job' post_id=post.pk edit_or_delete='delete' %}">Delete Post</a></li>
+				</ul>
+			</div>
+			{% endif %}
+		</div> <!-- Button Row -->
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+    		<div class="title col-md-12">
+    			<div class="row">
+    				<h3 class="title"><a href="/jobs/filter/?company={{post.company.name|slugify}}">{{post.company}}</a></h3>
+                    <span class="postview-label label label-info">{{post.post_type|title}}</span>
+    				<span class="date">Posted: {{post.date_posted|naturalday|title}}</span>
+				</div>
+				<div class="row postview-upperinfo">
+					<div class="container-fluid">
+						<div class="row">
+							<span class="job_title lab">Job Title: <span class="content"><a class="norm" href="/jobs/filter/?company=ALL&amp;location=ALL&amp;job_title={{post.job_title}}&amp;job_type=ALL&amp;technology=ALL">{{post.get_job_title_display}}</a></span></span>
+						</div>
+						<div class="row">
+							<span class="job_type lab">Job Type: <span class="content"><a class="norm" href="/jobs/filter/?company=ALL&amp;location=ALL&amp;job_title=ALL&amp;job_type={{post.job_type}}">{{post.get_job_type_display}}</a></span></span>
+						</div>
+						<div class="row postview-about-row">
+							<div><img alt="location" src="{% static "/static/images/gethired/map_location_test.png" %}"><span class="postview-location"><a href="/jobs/filter/?company=ALL&amp;location={{post.location.state}}&amp;job_title=ALL&amp;job_type=ALL&amp;technology=ALL">{{post.location}}</a></span></div>
+							<div><img alt="graduation cap" src="{% static "/static/images/gethired/grad_cap_test_g.png" %}"><span>{{post.applicant_degree|normdegree}}</span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- Title Row -->
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+    				<div class="row postview-interview-info-row">
+
+    					<label>Application Deadline:</label>   
+    					<p class="application-deadline">{{post.application_deadline}}</p>
+    					<label>Technologies</label>
+							<p><span class="content">
+    						{% for t in post.technologies.all %}
+    						<a href="/jobs/filter/?company=ALL&amp;location=ALL&amp;job_title=ALL&amp;job_type=ALL&amp;technology={{t}}">{{t}}</a>{% if not forloop.last %}, {% endif %}
+    						{% endfor %}
+    						</span></p>    						
+    					<label>Details:</label>   
+    					<p class="description well">{{post.description|safe}}</p>
+    					<label>How to Apply:</label>   
+    					<p class="description well">{{post.application_instructions}}</p>
+    				</div>
+    			</div>
+    		</div>
+		</div>
+		<div class="postview-report-rate row">
+    		<div class="content">
+    			<p>Report this post</p>
+    		</div>
+    	</div>
+	</div>
+</div>
+</div>
+{% endblock %}
+
+
