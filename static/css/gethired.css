@@ -1,0 +1,79 @@
+@CHARSET "ISO-8859-1";
+
+span.stars{
+    cursor: default;
+    font-size: 18px;
+    font-weight: 500;
+    color: #f9df00;
+}
+
+div.postview span.date, span.salary, span.rating{
+	float: right;
+}
+
+div.postview-about-row, span.postview-location a{
+    font-size: 14px;
+    padding: 10px 0px;
+    text-align: center;
+}
+
+span.postview-location, span.postview-offer{
+	padding: 0px 3px;
+}
+
+div.postview-about-row div{
+    padding: 5px;
+    display: inline-block;
+}
+
+div.postview-about-row img{
+	vertical-align: bottom;
+	padding: 0px 2px 0px 9px;
+}
+
+div.postview-salary-block-row{
+    text-align:center;
+    border-bottom: 1px dashed #dbdbdb;
+}
+
+div.postview-salary-blocks{
+    display:inline-block;
+    width: 120px;
+    text-align: center;
+}
+
+div.postview-offer-info-row{
+    padding-top: 15px;
+}
+
+div.postview-interview-info-row{
+   	border-top: 1px dashed #dbdbdb;
+   	padding-top: 10px;
+}
+
+div.postview-report-rate div.content{
+	float: right;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+div.related-post-location{
+    font-size: 12px;
+    color: #a4a4a4;
+}
+
+div.companyinfo{
+	margin: 1em 0.3em;
+	border: thin solid #DBDBDB;
+	color: #7b7b7b;
+}
+
+#id_name{
+    height: 100%;
+}
+
+input#id_display_salary{
+	height: 1px;
+	display: inline;
+	outline: none;
+}

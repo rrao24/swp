@@ -1,0 +1,192 @@
+{% extends "portal/base.html" %}
+{% block addstyles %} 
+<script src= "/static/js/chosen.jquery.js"></script>
+<link rel="stylesheet" href="/static/css/gethired.css">
+<link rel="stylesheet" href="/static/css/chosen.css">
+{% load wysiwyg %}
+{% wysiwyg_setup %}
+{% endblock %}
+{% load humanize %}
+{% block title %} Add/Edit Post {% endblock %}
+{% block header %} Job Board {% endblock %}
+{% block content %}
+<script>
+    /* autocomplete for companie on form */
+    $(document).ready(function() {
+        $.ajax({
+            url: 'http://redfish.cs.unc.edu/gethired/post/list/company/',
+            success:function(data) {
+                
+                $('#company_field input').autocomplete({
+                    source:data
+                });            
+            }
+        });
+        
+        
+    	var pre_preselected_value = $('select#id_offer_status option:selected').val();
+    	if(pre_preselected_value == 'RC'){
+    		$('div.select-offer-div').show();
+    	} else{
+    		$('div.select-offer-div').hide();
+    		 $('select#id_offer_details').val("");
+    	}
+    	
+        $('select#id_offer_status').change(function(){
+        	var selected_value = $('select#id_offer_status option:selected').val();
+        	if(selected_value == 'RC'){
+        		$('div.select-offer-div').show();
+        	} else{
+        		$('div.select-offer-div').hide();
+        		 $('select#id_offer_details').val("");
+        	}
+        });
+        
+    });
+</script>
+<div class="newform col-md-8 col-md-offset-2">
+{% if user.username == author.username or not author %}
+	<div class="row"><a style="margin: 10px;" href="/gethired/" class="btn pull-left btn-info btn-go-back">Cancel</a><h2>{{header}} Job</h2></div>
+	<p class="required"><span class="required">* </span>Required Fields</p>
+		<div class="new-job-form">
+			<form class="form-horizontal" autocomplete="off" method="post"
+                {% if update %}
+                action="{% url 'edit_post_job' post_id=post_id %}"
+                {% else %}
+                action="{% url 'create_post_job' %}"
+                {% endif %}
+                >	
+				{% csrf_token %}
+					<div class="container-fluid">
+						<div class="row">
+							<div class="new-company-info col-md-6">
+								<div class="form-group">
+        							<label for="id_name" class="control-label col-md-12"><span class="required">* </span>Company: </label>
+                                    {{company_form.name.errors}}
+        							<div class="col-md-12" id="company_field">
+    								{{company_form.name}}
+        							</div>
+								</div>
+								<div class="form-group">
+        							<label for="id_country" class="control-label col-md-12"><span class="required">* </span>Country: </label>
+        								{{location_form.country.errors}}
+        								<div class="col-md-12">
+        									{{location_form.country}}
+										</div>
+								</div>
+								<div class="form-group">
+        							<label for="id_state" class="control-label col-md-12"><span class="required">* </span>State: </label>
+        								{{location_form.state.errors}}
+        								<div class="col-md-12">
+ 											{{location_form.state}}
+        								</div>
+								</div>
+								<div class="form-group">
+        							<label for="id_city" class="control-label col-md-12"><span class="required">* </span>City: </label>
+        								{{location_form.city.errors}}
+        								<div class="col-md-12">
+       										{{location_form.city}}
+        								</div>
+								</div>
+							</div><!-- New Company Info Div End -->
+							<div class="new-interview-other-info col-md-6">
+
+                                <div class="form-group">
+                                    <label for="id_job_title" class="control-label col-md-12"><span class="required">* </span>Job Title: </label>
+                                    {{ form.job_title.errors }}
+                                    <div class="col-md-12">
+                                    {{ form.job_title}}
+                                    </div>
+                                </div>
+								<div class="form-group">
+       								<label for="id_job_type" class="control-label col-md-12"><span class="required">* </span>Job Type: </label>
+       								{{form.job_type.errors}}
+       								<div class="col-md-12">
+       								{{ form.job_type }}
+        							</div>
+								</div>
+								<div class="form-group">
+        							<label class="control-label col-md-12" for="id_applicant_degree"><span class="required">* </span>Minimum Required Degree: </label>
+         							{{ form.applicant_degree.errors}}
+        							<div class="col-md-12">
+        							{{ form.applicant_degree }}
+        							</div>
+								</div>
+                                <div class="form-group">
+                                    <label for="id_technologies" class="control-label col-md-12">
+                                        <span class="required">* </span>Preferred Technologies: </label> 
+                                    {{form.technologies.errors}}
+                                    <div class="col-md-12">{{form.technologies}}</div>
+                                 </div>
+							</div><!-- Other Div End -->
+						</div> <!-- Company Info Row End -->
+					</div><!-- End of Company Info Container -->
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12 new-interview-input">
+							<div class="form-group col-md-12">
+        						<label for="job_description" class="control-label col-md-12"><span class="required">* </span>Job Description: </label>
+        						{{form.description.errors}}
+        						<div class="col-md-12">
+        						{{form.description}}
+        						</div>
+							</div>
+							<div class="form-group col-md-12">
+        						<label for="application_instructions" class="control-label col-md-12"><span class="required">* </span>Application Instructions: </label>
+        						{{ form.applicaton_instructions.errors }}
+        						<div class="col-md-12">
+        						{{ form.application_instructions}}
+        						</div>
+                                <!--{% wysiwyg_editor "id_description" %}-->
+							</div>
+                            <div class="form-group col-md-12">
+                                <label for="id_deadline" class="control-label col-md-12"><span class="required">* </span>Application Deadline: </label>
+                                {{ form.applicaton_deadline.errors }}
+                                <div class="col-md-12 date">
+                                {{ form.application_deadline}}
+                                </div>
+                            </div>
+
+                            {% if not user.is_authenticated  %}
+                            <br>
+                            <div class="top-form-left col-md-12">   
+                                <div class="form-group">
+                                    <label for="id_password" class="control-label col-md-7 col-md-offset-2"><span
+                                        class="required">* </span>Password(Enables you to come back and edit the post): </label> 
+                                    <div class="col-md-7 col-md-offset-2">{{form.password.errors}}{{form.password}}</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="confirm_password" class="control-label col-md-7 col-md-offset-2"><span
+                                        class="required">* </span> Confirm Password: </label> 
+                                    <div class="col-md-7 col-md-offset-2"><ul class='errorlist' id='password_error'></ul><input type="password" id="confirm_password"></div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="form-group" style="display: none;">
+                                <label for="id_password" class="control-label col-md-12"><span
+                                    class="required">* </span>Password(Enables you to come back and edit the post): </label> 
+                                <div class="col-md-12">{{form.password.errors}}{{form.password}}</div>
+                            </div>
+                            <script>
+                                $(document).ready(function(){
+                                    //this is just a random password for authenticated users
+                                    $('input#id_password').val("user_is_authenticated_no_need_for_password");
+                                });
+                            </script>
+                            {% endif %}
+						</div><!-- Interview Input Div End -->
+					</div><!-- Input Row End -->
+				</div><!-- Input Row Container -->
+    			<div class="form-group col-md-12" style="text-align: center;">
+        			<button type="submit" class="btn btn-default form_with_password">Submit</button>
+        			<a style="margin: 10px;" href="/jobs/" class="btn btn-default">Cancel</a>
+    			</div>
+			</form>
+		</div>
+{% endif %}
+{% if user.username != author.username and author %}
+<p class="alert alert-danger" style="text-align: center; margin: 100px;">Sorry, we apologize for the inconvenience, it seems you must have ended up here by accident.</p>
+{% endif %}
+</div><!-- End new form Div -->
+{% endblock %}
