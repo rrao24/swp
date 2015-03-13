@@ -49,18 +49,18 @@ def main(request, site):
     context_dict = {}
 
     if site == "gethired":
-        interview_posts = models.Interview.objects.all()
-        offer_posts = models.Offer.objects.all()
+        interview_posts = [post for post in models.Interview.objects.all() if not post.deleted]
+        offer_posts = [post for post in models.Offer.objects.all() if not post.deleted]
         all_posts = sorted(
                            chain(interview_posts,offer_posts),
                            key=lambda post: post.date_posted,
                            reverse = True
                           )
     elif site == "marketplace":
-        all_posts = models.Project.objects.order_by('date_posted').reverse()
+        all_posts = [post for post in models.Project.objects.order_by('date_posted').reverse() if not post.deleted]
 
     elif site == "jobs":
-        all_posts = models.Job.objects.order_by('date_posted').reverse()
+        all_posts = [post for post in models.Job.objects.order_by('date_posted').reverse() if not post.deleted]
 
     paginator = Paginator(all_posts, 10)
     page = request.GET.get('page')
@@ -104,7 +104,7 @@ def delete_post(request, post_type, post_id):
         post.deleted = True
         post.save()
 
-        redirect = "/index/"
+        redirect = "/jobs/"
         if post_type == "interview" or post_type == "offer":
             redirect = "/gethired/"
         elif post_type == "project":
