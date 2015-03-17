@@ -26,26 +26,24 @@
 		<div class="row">
 			<h4 class="profile-header">Your posts in Get Hired:</h4>
 			<ul class="profile-list">
-				{% if not gethired_posts %}
-				<li>You have no posts in this section.</li>
-				{% endif %}
 				{% for post in gethired_posts %}
 				{% if not post.deleted %}
 				<li><a href="{% url 'get_post' post_type=post.post_type.lower post_id=post.pk %}"><span>{{post.post_type|title}} - {{post.company.name}} </span><span class="date" style="float:right;">{{post.date_posted|naturaltime}}</span></a></li>
 				{% endif %}
+				{% empty %}
+				<li>You have no posts in this section.</li>
 				{% endfor %}
 			</ul>
 		</div>
 		<div class="row">
 			<h4 class="profile-header">Your posts in Project Marketplace:</h4>
 			<ul class="profile-list">
-				{% if not project_posts %}
-				<li>You have no posts in this section.</li>
-				{% endif %}
 				{% for post in project_posts %}
 				{% if not post.deleted %}
 				<li><a href="{% url 'get_post_project' post_id=post.pk %}"><span>{{post.post_type|title}} - {{post.title}} </span><span class="date" style="float:right;">{{post.date_posted|naturaltime}}</span></a></li>
 				{% endif %}
+				{% empty %}
+				<li>You have no posts in this section.</li>
 				{% endfor %}
 			</ul>
 		</div>

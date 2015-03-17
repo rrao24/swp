@@ -257,6 +257,8 @@ def create_post_gethired(request, post_type, post_id=None):
         Form = form_dict[post_type]
         context = RequestContext(request)
         context_dict = {}
+        if post_id == u'0':
+                post_id = None
         if post_id:
                 model = model_dict[post_type]
                 post = model.objects.get(pk=post_id)
@@ -296,7 +298,9 @@ def create_post_gethired(request, post_type, post_id=None):
             if post_type == "interview":
                 user_form.fields['offer_details'].queryset = models.Offer.objects.filter(author = request.user)
             context_dict['form'] = user_form
-            context_dict['post_id'] = str(post_id)
+            if post_id is None:
+                post_id = 0
+            context_dict['post_id'] = post_id
             context_dict['location_form'] = forms.LocationForm({'country':data['country'],'state':data['state'],'city':data['city']})
             context_dict['company_form'] = forms.CompanyForm({'name':data['name']})
             context_dict['post_type'] = post_type
@@ -338,6 +342,7 @@ def render_new_post_form(request, post_type,post_id=None):
             context_dict['location_form'] = forms.LocationForm()
             context_dict['company_form'] = forms.CompanyForm()
             context_dict['header'] = 'Add New '
+            context_dict['post_id'] = 0
         
         context_dict['post_type'] = post_type
         if post_type == "project":
