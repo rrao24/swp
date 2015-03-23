@@ -133,16 +133,14 @@
 								</div>
 								<div class="form-group">
         							<label for="id_offer_status" class="control-label col-md-12"><span class="required">* </span>Offer Status: </label>
-        							<label for="id_link_offer" class="control-label col-md-12" style="font-size: 12px; color: #9F9F9F;"><em>We ask that you come back and update your offer status once notifed to better help prospective interviews, 
-        							you will also have the ability to link to your offer post by selecting the Recieved option.</em></label>
+        							<label for="id_link_offer" class="control-label col-md-12" style="font-size: 12px; color: #9F9F9F;"><em>Remember to come back and update your offer status. </em></label>
         							{{ form.offer_status.errors }}
         							<div class="col-md-12">
         							{{ form.offer_status }}
         							</div>
 								</div>
 								<div class="form-group select-offer-div" style="display: none;")>
-        							<label for="id_link_offer" class="control-label col-md-12">You can select from your posted offers to link this interview to, select which from the list below or leave blank if you have not yet posted or wish not to link an offer: </label>
-        							<label for="id_link_offer" class="control-label col-md-12" style="font-size: 12px; color: #9F9F9F;"><em>You can always link an offer back to an interview by editing the interview post once you've recieved and posted an offer.</em></label>
+        							<label for="id_link_offer" class="control-label col-md-12">You can select from your posted offers or leave this field blank.</label>
       								{{form.offer_details.errors}}
         							<div class="col-md-12">
         								{{form.offer_details}}
@@ -293,7 +291,7 @@
         							<label for="id_salary" class="control-label col-md-12"><span class="required">* </span>Permission to display salary in posts: </label>
         							{{ form.display_salary.errors }}
         							<div class="col-md-12">
-										<span>Yes:  {{form.display_salary}}</span>
+								{{form.display_salary}}
        								</div>
 								</div>
 							</div>

@@ -6,7 +6,7 @@ Created on Mar 18, 2014
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from datetime import date
+from datetime import date, datetime, timedelta
 import logging
 
 def validate_future_date(value):
@@ -27,6 +27,29 @@ class Post(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True) #automatically set upon object creation
     times_reported = models.IntegerField(default=0, editable=False)
     deleted = models.BooleanField(default=False, editable=False)
+    #new
+    def is_recent(self):
+        '''
+        print "baroo"
+        print date.today()
+        print self.date
+        d = date.today() - self.created
+        days = int(d) / 86400
+        print "days:" + days
+        if days < 1:
+            print "baree"
+	    return True
+        return False
+        '''
+        print self.date_posted
+        if ((date.today() - self.date_posted.date()) <= timedelta(days=1)):
+            return True
+        else:  
+            return False
+  #is_recent = (date_posted < date.today()) and (date_posted > date.today() - d)
+        
+    #endnew
+
 
     def __unicode__(self):
         return self.url
@@ -499,7 +522,10 @@ class Offer(GetHiredPost):
     pay_type = models.CharField(max_length=2,
                                 choices=pay_choices)
 
-    display_salary = models.BooleanField()
+    #display_salary = models.BooleanField()
+    CHOICES = ((1, ("Yes")),
+    (2, ("No")))
+    display_salary = models.IntegerField(choices=CHOICES, default=2)
     salary = models.DecimalField(decimal_places=2, max_digits=8)
     signing_bonus = models.DecimalField(decimal_places=2, max_digits=8, blank=True, null=True)
     relocation_bonus = models.DecimalField(decimal_places=2, max_digits=8, blank=True, null=True)

@@ -10,6 +10,7 @@ class InterviewForm(forms.ModelForm):
     class Meta:
         model = Interview
         exclude = ["author"]  
+        display_salary = forms.BooleanField() #new
 
 class OfferForm(forms.ModelForm):
     class Meta:

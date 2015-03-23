@@ -11,9 +11,48 @@
 				<li><a href="/accounts/password/change/">Change Password</a></li>
 				<li><a href="/accounts/logout">Logout</a></li>
 			</ul>
+			<br>
+			<h4>New Posts in Get Hired:</h4>
+			<ul>
+			{% for post in gethired_posts %}
+			{% if not post.deleted and post.is_recent %}
+			<li><a href="{% url 'get_post' post_type=post.post_type.lower post_id=post.pk %}"><span>{{post.post_type|title}} - {{post.company.name}} </span></a></li>
+			{% endif %}
+			{% empty %} 
+			<li><span>Nothing new added recently!</span></li>
+			{% endfor %}
+			</ul>
+			<h4>New Posts in Projects:</h4>
+			<ul>
+			{% for post in project_posts %}
+				{% if not post.deleted and post.is_recent%}
+				<li><a href="{% url 'get_post_project' post_id=post.pk %}"><span>{{post.post_type|title}} - {{post.title}} </span></a></li>
+				{% endif %}
+			{% empty %} 
+			<li><span>Nothing new added recently!</span></li>
+
+			{% endfor %}
+			</ul>
+			<h4>New Posts in Job Board:</h4>
+			<ul>
+			{% for post in job_posts %}
+				{% if not post.deleted %}
+				<li><a href="{% url 'get_post_job' post_id=post.pk %}"><span>{{post.post_type|title}} - {{post.company.name}} </span><span class="date" style="float:right;">{{post.date_posted|naturaltime}}</span></a></li>
+				{% endif %}
+				{% empty %} 
+			<li><span>Nothing new added recently!</span></li>
+
+				{% endfor %}
+			</ul>
+
+
+						<!-- start feedwind code --><script type="text/javascript">document.write('<script type="text/javascript" src="' + ('https:' == document.location.protocol ? 'https://' : 'http://') + 'feed.mikle.com/js/rssmikle.js"><\/script>');</script><script type="text/javascript">(function() {var params = {rssmikle_url: "https://www.google.com/calendar/feeds/cs.unc.edu_d58v7pr1keka8slvhu6r4hm044%40group.calendar.google.com/public/basic",rssmikle_frame_width: "250",rssmikle_frame_height: "300",rssmikle_target: "_blank",rssmikle_font: "Geneva, Arial, sans-serif",rssmikle_font_size: "10",rssmikle_border: "on",responsive: "on",rssmikle_css_url: "",text_align: "left",corner: "on",autoscroll: "off",scrolldirection: "up",scrollstep: "3",mcspeed: "20",sort: "Old",rssmikle_title: "off",rssmikle_title_sentence: "",rssmikle_title_link: "",rssmikle_title_bgcolor: "#9ACD32",rssmikle_title_color: "#FFFFFF",rssmikle_title_bgimage: "",rssmikle_item_bgcolor: "#FFFFFF",rssmikle_item_bgimage: "",rssmikle_item_title_length: "55",rssmikle_item_title_color: "#666666",rssmikle_item_border_bottom: "on",rssmikle_item_description: "on",rssmikle_item_description_length: "15",rssmikle_item_description_color: "#666666",rssmikle_item_date: "off",rssmikle_timezone: "Etc/GMT",datetime_format: "%b %e, %Y %l:%M:%S %p",rssmikle_item_description_tag: "on_flexcroll",rssmikle_item_description_image_scaling: "off",rssmikle_item_podcast: "off"};feedwind_show_widget_iframe(params);})();</script><div style="font-size:10px; text-align:center; "><a href="http://feed.mikle.com/" target="_blank" style="color:#CCCCCC;">RSS Feed Widget</a><!--Please display the above link in your web page according to Terms of Service.--></div><!-- end feedwind code -->			
+
 		</div>
 	</div>
 </div>
+
+<!-- good code -->
 <div class="profle-dash col-md-9">
 	<div class="container-fluid">
 		<h2 class="styled">User Dash</h2>
