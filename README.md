@@ -13,3 +13,4 @@ python get-pip.py
 ```
 pip install -r requirements.txt
 ```
+to install the required third part dependencies
