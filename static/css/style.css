@@ -493,6 +493,9 @@ div.panel-login a{
 }
 
 ul.profile-list{
+    max-height: 140px;
+    overflow:hidden; 
+    overflow-y:scroll;
     list-style: none inside none;
     border-radius: 5px;
     border: 1px solid #fbfbfb;

@@ -29,18 +29,6 @@ class Post(models.Model):
     deleted = models.BooleanField(default=False, editable=False)
     #new
     def is_recent(self):
-        '''
-        print "baroo"
-        print date.today()
-        print self.date
-        d = date.today() - self.created
-        days = int(d) / 86400
-        print "days:" + days
-        if days < 1:
-            print "baree"
-	    return True
-        return False
-        '''
         print self.date_posted
         if ((date.today() - self.date_posted.date()) <= timedelta(days=1)):
             return True
@@ -419,11 +407,13 @@ class Project(Post):
 # GETHIRED PARENT MODELS
 class Company(models.Model):
     name = models.CharField(max_length=30)
-    avg_salary = models.DecimalField(decimal_places=2, max_digits=10, default=0, editable=False)
+    avg_salary = models.DecimalField(decimal_places=2, max_digits=10, default=0, editable=True) #from false
     avg_interview_rating = models.DecimalField(decimal_places=1, max_digits=10, default=0, editable=False)
     num_offers = models.IntegerField(default=0, editable=False)
     num_offers_to_calculate_salary = models.IntegerField(default=0, editable=False)
     num_interviews = models.IntegerField(default=0, editable=False)
+    avg_limit = models.IntegerField(default=10, editable=True) #new
+
     def __unicode__(self):
         return self.name
 
@@ -433,16 +423,22 @@ class Company(models.Model):
 
     def add_offer(self,offer):
         self.num_offers += 1
-        if (offer.pay_type == 'YS' and offer.job_type == 'FT'):
+        if (offer.pay_type == 'YS' and offer.job_type == 'FT' and offer.display_salary == 1):
             current_avg = self.avg_salary * self.num_offers_to_calculate_salary
             self.num_offers_to_calculate_salary += 1
             self.avg_salary = (current_avg + offer.salary) / self.num_offers_to_calculate_salary
-   
+        
+        if(offer.pay_type == 'YS' and offer.job_type == 'FT' and offer.display_salary == 2):
+                if(self.num_offers > self.avg_limit):
+                    current_avg = self.avg_salary * self.num_offers_to_calculate_salary
+                    self.num_offers_to_calculate_salary += 1
+                    self.avg_salary = (current_avg + offer.salary) / self.num_offers_to_calculate_salary
+
     def add_interview(self, interview):
         current_rating = self.avg_interview_rating * self.num_interviews
         self.num_interviews+= 1
         self.avg_interview_rating = (current_rating + interview.interview_rating) / self.num_interviews
-
+    
 class GetHiredPost(Post):
     degree_choices = (
             ('MI','Minor'),
