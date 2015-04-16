@@ -65,7 +65,8 @@ function dateAdd(date, interval, units) {
 
 function getURL() {
   var d = new Date();
-  return "https://www.google.com/calendar/feeds/gl7gkfghg662k4upik0a4188aoh30q9m@import.calendar.google.com/public/basic?orderby=starttime&sortorder=descending&updated-min=" + dateAdd(d,'DAY',-1).toISOString() + "&updated-max=" + dateAdd(d, 'WEEK', 1).toISOString() + "&max-results=10"
+  //return "https://www.google.com/calendar/feeds/gl7gkfghg662k4upik0a4188aoh30q9m@import.calendar.google.com/public/basic?orderby=starttime&sortorder=descending&updated-min=" + dateAdd(d,'DAY',-3).toISOString() + "&updated-max=" + dateAdd(d, 'WEEK', 1).toISOString() + "&max-results=13"
+  return "https://www.google.com/calendar/feeds/cs.unc.edu_d58v7pr1keka8slvhu6r4hm044%40group.calendar.google.com/public/basic?start-min=" + d.toISOString();
 }
 
 

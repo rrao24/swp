@@ -9,9 +9,12 @@ To download the site simply clone this repository and install the third party de
 ```
 python get-pip.py
 ```
-2) Then simply install the external libraries used in this project using ```requirements.txt```
+2) Then install the external libraries used in this project
 ```
-pip install -r requirements.txt
+pip install beautifulsoup
+pip install simplejson
+pip install django-wysiwyg
+pip install django-registration
 ```
 3) To run the local development server, navigate to the folder ```csportal``` where the code resides and do:
 
