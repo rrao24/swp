@@ -46,10 +46,10 @@ color: #848484;
 				<li><a href="/accounts/logout">Logout</a></li>
 				</ul>
 
-				<div class="row"><h4 class="sidebar-header">New Posts in Projects</h4></div>
+				<div class="row"><h4 class="sidebar-header">Your Posts in Projects</h4></div>
 				<ul class="profile-list">
-				{% for post in project_posts %}
-				{% if not post.deleted and post.is_recent%}
+				{% for post in my_project_posts %}
+				{% if not post.deleted %}
 				<li style="text-align: left;"><a href="{% url 'get_post_project' post_id=post.pk %}"><span>{{post.post_type|title}} - {{post.title}} </span></a></li>
 				{% endif %}
 				{% empty %} 
@@ -58,10 +58,10 @@ color: #848484;
 				{% endfor %}
 				</ul>
 
-				<div class="row"><h4 class="sidebar-header">New Posts in Get Hired</h4></div>
+				<div class="row"><h4 class="sidebar-header">Your Posts in Get Hired</h4></div>
 				<ul class="profile-list">
-				{% for post in gethired_posts %}
-				{% if not post.deleted and post.is_recent %}
+				{% for post in my_gethired_posts %}
+				{% if not post.deleted %}
 				<li style="text-align: left;"><a href="{% url 'get_post' post_type=post.post_type.lower post_id=post.pk %}"><span>{{post.post_type|title}} - {{post.company.name}} </span></a></li>
 				{% endif %}
 				{% empty %} 
@@ -69,9 +69,9 @@ color: #848484;
 				{% endfor %}
 				</ul>
 			
-				<div class="row"><h4 class="sidebar-header">New Posts in Job Market</h4></div>
+				<div class="row"><h4 class="sidebar-header">Your Posts in Job Market</h4></div>
 				<ul class="profile-list">
-				{% for post in job_posts %}
+				{% for post in my_job_posts %}
 				{% if not post.deleted %}
 				<li style="text-align: left;"><a href="{% url 'get_post_job' post_id=post.pk %}"><span>{{post.post_type|title}} - {{post.company.name}} </span><span class="date" style="float:right;">{{post.date_posted|naturaltime}}</span></a></li>
 				{% endif %}
@@ -115,37 +115,30 @@ color: #848484;
 			</div>
 		</div>
 		<div class="row">
-			<h4 class="profile-header">Your posts in Get Hired:</h4>
+			<h4 class="profile-header">Recent posts in Get Hired:</h4>
 			<ul class="profile-list">
 				{% for post in gethired_posts %}
-				{% if not post.deleted %}
+				{% if not post.deleted and post.is_recent %}
 				<li><a href="{% url 'get_post' post_type=post.post_type.lower post_id=post.pk %}"><span>{{post.post_type|title}} - {{post.company.name}} </span><span class="date" style="float:right;">{{post.date_posted|naturaltime}}</span></a></li>
 				{% endif %}
-				{% empty %}
-				<li>You have no posts in this section.</li>
 				{% endfor %}
 			</ul>
 		</div>
 		<div class="row">
-			<h4 class="profile-header">Your posts in Project Marketplace:</h4>
+			<h4 class="profile-header">Recent posts in Project Marketplace:</h4>
 			<ul class="profile-list">
 				{% for post in project_posts %}
-				{% if not post.deleted %}
+				{% if not post.deleted and post.is_recent %}
 				<li><a href="{% url 'get_post_project' post_id=post.pk %}"><span>{{post.post_type|title}} - {{post.title}} </span><span class="date" style="float:right;">{{post.date_posted|naturaltime}}</span></a></li>
 				{% endif %}
-				{% empty %}
-				<li>You have no posts in this section.</li>
 				{% endfor %}
 			</ul>
 		</div>
 		<div class="row">
-			<h4 class="profile-header">Your posts on Job Board:</h4>
+			<h4 class="profile-header">Recent posts on Job Board:</h4>
 			<ul class="profile-list">
-				{% if not job_posts %}
-				<li>You have no posts in this section.</li>
-				{% endif %}
 				{% for post in job_posts %}
-				{% if not post.deleted %}
+				{% if not post.deleted and post.is_recent %}
 				<li><a href="{% url 'get_post_job' post_id=post.pk %}"><span>{{post.post_type|title}} - {{post.company.name}} </span><span class="date" style="float:right;">{{post.date_posted|naturaltime}}</span></a></li>
 				{% endif %}
 				{% endfor %}

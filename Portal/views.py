@@ -127,23 +127,44 @@ class registrationview(RegistrationView):
 def userprofile(request):
 
     """Access a simple dashboard where user can view and edit all
-    post she has authored """
+    post s/he has authored """
 
     context = RequestContext(request)
     context_dict = {}
     poster = models.User.objects.get(username=request.user)
-    interview_posts = models.Interview.objects.filter(author=poster)
-    offer_posts = models.Offer.objects.filter(author=poster)
+    #interview_posts = models.Interview.objects.filter(author=poster)
+    interview_posts = models.Interview.objects.all()
+    #offer_posts = models.Offer.objects.filter(author=poster)
+    offer_posts = models.Offer.objects.all()
     all_hired_posts = sorted(
                        chain(interview_posts,offer_posts),
                        key=lambda post: post.date_posted,
                        reverse = True
                       )
-    all_project_posts = models.Project.objects.filter(author=poster).order_by('date_posted').reverse()
-    all_job_posts = models.Job.objects.filter(author=poster).order_by('date_posted').reverse()
+    #all_project_posts = models.Project.objects.filter(author=poster).order_by('date_posted').reverse()
+    all_project_posts = models.Project.objects.all().order_by('date_posted').reverse()
+    #all_job_posts = models.Job.objects.filter(author=poster).order_by('date_posted').reverse()
+    all_job_posts = models.Job.objects.all().order_by('date_posted').reverse()
     context_dict['gethired_posts'] = all_hired_posts
     context_dict['project_posts'] = all_project_posts
     context_dict['job_posts'] = all_job_posts
+    
+
+
+    my_interview_posts = models.Interview.objects.filter(author=poster)
+    my_offer_posts = models.Offer.objects.filter(author=poster)
+    my_all_hired_posts = sorted(
+                       chain(my_interview_posts,my_offer_posts),
+                       key=lambda post: post.date_posted,
+                       reverse = True
+                      )
+
+    my_all_project_posts = models.Project.objects.filter(author=poster).order_by('date_posted').reverse()
+    my_all_job_posts = models.Job.objects.filter(author=poster).order_by('date_posted').reverse()
+    context_dict['my_gethired_posts'] = my_all_hired_posts
+    context_dict['my_project_posts'] = my_all_project_posts
+    context_dict['my_job_posts'] = my_all_job_posts
+
     return render_to_response('portal/profile.html', context_dict, context)
 #END User authentication Views
 
