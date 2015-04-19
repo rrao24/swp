@@ -43,8 +43,8 @@
 							<ul class="navlist">
 								<li><a class="home" href="{% url 'index_view' %}">Home<span class="glyphicon glyphicon-home"></span></a></li>
 								<li><a class="market" href="{% url 'main_view' site='marketplace' %}">Project Market <span class="glyphicon glyphicon-folder-open"></span></a></li>
-								<li><a class="hired" href="{% url 'main_view' site='gethired' %}">Get Hired<span class="glyphicon glyphicon-briefcase"></span></a></li>
-								<li><a class="jobs" href="{% url 'main_view' site='jobs' %}">Job Board<span class="glyphicon glyphicon-user"></span></a></li>
+								<li><a class="hired" href="{% url 'main_view' site='gethired' %}">Getting Hired<span class="glyphicon glyphicon-briefcase"></span></a></li>
+								<li><a class="jobs" href="{% url 'main_view' site='jobs' %}">Job Market<span class="glyphicon glyphicon-user"></span></a></li>
 								<li><a href="{% url 'csclub_view' %}">CS Club<span class="glyphicon glyphicon-hdd"</span></a></li>
 							</ul>
 						</div><!-- End of Navbar -->
@@ -58,7 +58,13 @@
 			</div><!-- Info Div Row End -->
 			<div class="row search">
 				<div class="user-bar col-md-12">
-					<span style="float: right;">{% if not user.is_authenticated %}Welcome, Guest. Please <a href="/accounts/login/"> login!</a> {% endif %}</span>
+					<span style="float: right;">
+					{% if user.is_authenticated %}
+					<a href="/accounts/logout/">
+					{% else %}
+					Welcome, Guest. Please <a href="/accounts/login/"> login!</a>
+					{% endif %}
+					</span>
 				</div><!-- End of user-bar Div -->
 			</div><!-- End of Search Row -->
 			<div class="container-fluid">

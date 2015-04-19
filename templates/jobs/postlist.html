@@ -5,6 +5,16 @@
 {% block title %} Job Board {% endblock %}
 {% block header %} Job Board {% endblock %}
 {% block content %}
+<div class="row search">
+                                <div class="user-bar col-md-12">
+                                        <span style="float: right;">
+                                        {% if user.is_authenticated %}
+                                        <a href="/accounts/logout/">Logout</a>
+                                        {% endif %}
+                                        </span>
+                                </div><!-- End of user-bar Div -->
+                        </div><!-- End of Search Row -->
+
 <div class="filteroptions col-md-3">
 <div class="filterdiv panel panel-default">
 <div class="contain">
