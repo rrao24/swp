@@ -9,23 +9,8 @@ To download the site simply clone this repository and install the third party de
 ```
 python get-pip.py
 ```
-2) Then install the external libraries used in this project
+2) Then install the external libraries used in this project as specified by the requirements text file
 ```
-pip install beautifulsoup
-pip install simplejson
-pip install django-wysiwyg
-pip install django-registration
+pip install -r requirements.txt
 ```
-3) To run the local development server, navigate to the folder ```csportal``` where the code resides and do:
-
-```
-python manage.py runserver
-```
-
-4) The site should now be running on localhost
-
-Possible additions
-=======
-- Not having to edit password everytime a password protected post is edited
-- Running the database deletion command with the cron manager
-- Migrating to PostgreSQL
+3) To host on Apache, make the Apache system user (var-www or the like) the owner of necessary files (everything in the swp directory should be sufficient). Also, make sure Apache is set up to run with wsgi and points to a wsgi entry point (in our case, index.wsgi).
