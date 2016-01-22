@@ -77,7 +77,7 @@ STATICFILES_DIRS = (
 )
 '''
 ##ADDED/replaced above FOR WSGI
-STATIC_ROOT = '/var/www/swp/static/'
+STATIC_ROOT = '/home/brandon/GitCode/CSWebsite/static/'
 STATIC_URL = '/static/'
 
 ###
